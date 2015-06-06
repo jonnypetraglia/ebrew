@@ -48,7 +48,7 @@ As your book gets larger, it's nice to be able to split it up into manageable ch
   "contents": [
     "lorem.md",
     "ipsum.md"
-  ],
+  ]
 }
 ```
 
