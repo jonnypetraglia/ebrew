@@ -9,6 +9,7 @@ var marked = require('marked')
 var async = require('async')
 var marked = require('marked')
 var cheerio = require('cheerio')
+var mime = require('mime')
 
 marked.setOptions({
   gfm: true,
@@ -108,6 +109,24 @@ exports.processManifest = function(manifest, root, cb) {
       })
     })
 
+    var resources = []
+    var xhtmls = texts.map(function(text, i) {
+      var $ = cheerio.load(marked(text))
+      $('img').each(function() {
+        if (!/^\w+:/.test(this.attribs.src)) {
+          var file = path.resolve(root, contents[i], '..', this.attribs.src)
+          var ext = path.extname(this.attribs.src)
+          var href = 'resources/'+resources.length+ext
+          this.attribs.src = '../'+href
+          resources.push({
+            file: file,
+            href: href,
+          })
+        }
+      })
+      return $.xml()
+    })
+
     // console.log(require('util').inspect(headings, null, {depth: -1}))
 
     cb(null, {
@@ -117,6 +136,8 @@ exports.processManifest = function(manifest, root, cb) {
       language: language,
       contents: contents,
       texts: texts,
+      xhtmls: xhtmls,
+      resources: resources,
       headings: headings,
       authors: authors,
       publisher: publisher,
@@ -203,6 +224,12 @@ exports.createArchive = function createArchive(options, cb) {
           'media-type': 'application/xhtml+xml',
           href: 'text/'+i+'.xhtml',
         }}}
+      })).concat(manifest.resources.map(function(res, i) {
+        return {item: {_attr: {
+          id: 'res-'+i,
+          'media-type': mime.lookup(res.href),
+          href: res.href,
+        }}}
       }))},
       {spine: [
         {_attr: {toc: 'toc'}},
@@ -248,7 +275,7 @@ exports.createArchive = function createArchive(options, cb) {
     ]},
   ], {indent: indent}), {name: 'OEBPS/text/_title.xhtml'})
 
-  manifest.texts.forEach(function(text, i) {
+  manifest.xhtmls.forEach(function(xhtml, i) {
     archive.append(
       XML_DECLARATION + XHTML_DOCTYPE+
       '<html xmlns="http://www.w3.org/1999/xhtml">'+
@@ -256,10 +283,12 @@ exports.createArchive = function createArchive(options, cb) {
           '<title>Chapter '+(i+1)+'</title>'+
           '<link rel="stylesheet" href="../style.css" />'+
         '</head>'+
-        '<body>'+
-          cheerio.load(marked(text)).xml()+
-        '</body>'+
+        '<body>'+xhtml+'</body>'+
       '</html>', {name: 'OEBPS/text/'+i+'.xhtml'})
+  })
+
+  manifest.resources.forEach(function(res) {
+    archive.file(res.file, {name: 'OEBPS/'+res.href})
   })
 
   archive.append(L([
