@@ -1,6 +1,6 @@
 # EBREW
 
-EBREW lets you create EPUB books and documents using Markdown and a simple JSON metadata format. To get started, install `ebrew` via npm and set up a new book:
+EBREW lets you create EPUB books and documents using Markdown and a simple JSON metadata format. To get started, install `ebrew` via npm and start a new book:
 
     > npm i -g ebrew
 
