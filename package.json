@@ -2,6 +2,7 @@
   "name": "ebrew",
   "version": "0.0.1",
   "description": "Create EPUB documents with Markdown and JSON.",
+  "repository": "https://github.com/nathan/ebrew",
   "main": "index.js",
   "scripts": {},
   "preferGlobal": true,
