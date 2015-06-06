@@ -54,6 +54,14 @@ As your book gets larger, it's nice to be able to split it up into manageable ch
 
 Each section starts on a new page.
 
+# Images
+
+You can add images to your markdown documents as you normally would.
+
+    ![Three circles](images/circles.svg)
+
+EBREW automatically copies the images you use into the resultant EPUB document and adjusts image URLs to correctly refer to them.
+
 # Reference
 
 The above tutorial should give you a pretty good idea of how to use EBREW; the following sections provide a comprehensive reference of the command line interface, the manifest format, and EBREW's Markdown extensions.
