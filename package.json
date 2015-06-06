@@ -1,6 +1,6 @@
 {
   "name": "ebrew",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Create EPUB documents with Markdown and JSON.",
   "repository": "https://github.com/nathan/ebrew",
   "main": "index.js",
