@@ -3,5 +3,8 @@
   "author": "Nathan Dinsmore",
   "date": "2015-06-05",
   "rights": "Public Domain",
-  "contents": "book/content.md"
+  "contents": [
+    "book/lorem.md",
+    "book/ipsum.md"
+  ]
 }
