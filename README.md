@@ -64,7 +64,7 @@ The above tutorial should give you a pretty good idea of how to use EBREW; the f
 Takes no options. Runs an interactive wizard for creating a new `book.json` manifest.
 
 #### <code>ebrew [output=<em>title</em>.epub] [input=book.json]</code>
-Generates an EPUB file from the given manifest
+Generates an EPUB file from the given manifest.
 
 ## The manifest format
 
