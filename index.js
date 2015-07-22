@@ -48,6 +48,7 @@ exports.generate = function generate(input, output, cb) {
           archive.pipe(fs.createWriteStream(output))
           archive.on('end', function() {
             console.log('Generated '+path.relative(process.cwd(), output))
+            cb()
           })
         })
       })
